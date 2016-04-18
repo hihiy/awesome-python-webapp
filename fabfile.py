@@ -12,10 +12,11 @@ import os, re
 from datetime import datetime
 from fabric.api import *
 
-env.user = 'michael'
+env.user = 'root'
 env.sudo_user = 'root'
-env.hosts = ['192.168.0.3']
-
+env.hosts = ['104.236.166.185']
+env.password = '19930527hihi'
+# env.key_filename=r'C:\Users\cooll\Desktop\pri.ppk'
 db_user = 'www-data'
 db_password = 'www-data'
 
@@ -66,10 +67,10 @@ def deploy():
     with cd('%s/%s' % (_REMOTE_BASE_DIR, newdir)):
         sudo('tar -xzvf %s' % _REMOTE_TMP_TAR)
     with cd(_REMOTE_BASE_DIR):
-        sudo('rm -f www')
+        sudo('rm -rf www')
         sudo('ln -s %s www' % newdir)
-        sudo('chown www-data:www-data www')
-        sudo('chown -R www-data:www-data %s' % newdir)
+        sudo('chown root: www')
+        sudo('chown -R root: %s' % newdir)
     with settings(warn_only=True):
         sudo('supervisorctl stop awesome')
         sudo('supervisorctl start awesome')
